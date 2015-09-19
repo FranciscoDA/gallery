@@ -11,15 +11,16 @@ public class GalleryController {
 		loader.load(gallery, "data.xml");
 		
 		Grid grid = new Grid();
+		grid.setHandler(new GridHandler() {
+			public void previewSelected(String path) {
+				System.out.println(path);
+			}
+		});
 		ListIterator<String> i = gallery.getResources();
 		while(i.hasNext()) {
 			grid.addElement(i.next());
 		}
-		grid.setHandler(new GridHandler() {
-			public void elementClicked(String path) {
-				System.out.println(path);
-			}
-		});
+
 		grid.show();
 	}
 }

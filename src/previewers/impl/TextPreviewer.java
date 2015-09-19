@@ -1,11 +1,14 @@
 package previewers.impl;
 
 import view.Grid;
+import view.GridHandler;
+
 import java.io.File;
 import java.util.Scanner;
 
 import javax.swing.JTextArea;
 
+import previewers.DefaultMouseListener;
 import previewers.Previewer;
 
 @SuppressWarnings("serial")
@@ -18,8 +21,10 @@ public class TextPreviewer extends JTextArea implements Previewer {
 	private static int MAX_LINES = 9;
 	private static int MAX_CHARS = 25;
 
-	public TextPreviewer(){}
-	public TextPreviewer(String path, int w, int h) {
+	private GridHandler handler;
+
+	@Override
+	public void preview(String path) { 
 		File f = new File(path);
 		try {
 			Scanner sc = new Scanner(f);
@@ -34,5 +39,12 @@ public class TextPreviewer extends JTextArea implements Previewer {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		this.addMouseListener(new DefaultMouseListener(path, handler));
+	}
+
+	@Override
+	public void setHandler(GridHandler h) {
+		this.handler = h;
 	}
 }

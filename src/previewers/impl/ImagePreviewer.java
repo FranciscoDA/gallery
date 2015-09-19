@@ -1,16 +1,18 @@
 package previewers.impl;
 
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import previewers.DefaultMouseListener;
 import previewers.Previewer;
 import view.Grid;
+import view.GridHandler;
 
 @SuppressWarnings("serial")
 public class ImagePreviewer extends JPanel implements Previewer {
@@ -19,15 +21,37 @@ public class ImagePreviewer extends JPanel implements Previewer {
 		Grid.registerPreviewer(".png", ImagePreviewer.class);
 		Grid.registerPreviewer(".jpg", ImagePreviewer.class);
 	}
-	public ImagePreviewer(){}
-	public ImagePreviewer(String path, int w, int h) {
+	
+	private GridHandler handler;
+	private Image image;
+	
+	@Override
+	public void preview(String path) {
+		setOpaque(false);
 		try {
-			BufferedImage img = ImageIO.read(new File(path));
-			this.add(new JLabel(new ImageIcon(
-				img.getScaledInstance(w, h, Image.SCALE_SMOOTH)
-			)));
+			
+			Dimension d = this.getPreferredSize();
+			this.image = ImageIO.read(new File(path)).getScaledInstance(
+					d.width, d.height, Image.SCALE_SMOOTH
+			);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		this.addMouseListener(new DefaultMouseListener(path, handler));
+	}
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2d = (Graphics2D) g; 
+		g2d.drawImage(image, 0, 0, null);
+		
+	}
+
+	@Override
+	public void setHandler(GridHandler h) {
+		this.handler = h;
 	}
 }

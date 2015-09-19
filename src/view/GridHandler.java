@@ -1,5 +1,5 @@
 package view;
 
 public interface GridHandler {
-	public void elementClicked(String path);
+	public void previewSelected(String path);
 }
