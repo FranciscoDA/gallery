@@ -20,7 +20,6 @@ public class GalleryController {
 		while(i.hasNext()) {
 			grid.addElement(i.next());
 		}
-
 		grid.show();
 	}
 }

@@ -13,6 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import previewers.*;
 
@@ -25,14 +26,12 @@ public class Grid {
 	}
 	private static Pattern extensionPattern = Pattern.compile("(\\..+)$");
 
-	private static int GRID_WIDTH = 3;
-	private static int GRID_HEIGHT = 2;
-	private static int CELL_SIZE = 150;
-	private static int FRAME_HEIGHT = 25;
-	private static int FRAME_WIDTH = 4;
+	private static int GRID_WIDTH = 2;
+	private static int GRID_HEIGHT = 3;
+	private static int CELL_SIZE = 125;
 	
 	private JFrame frame;
-	private Component[] components = new Component[GRID_WIDTH * GRID_HEIGHT];
+	private LinkedList<Component> components = new LinkedList<>();
 	
 	private GridHandler handler;
 	private LinkedList<String> elements = new LinkedList<>();
@@ -40,18 +39,15 @@ public class Grid {
 	
 	public Grid() {
 		frame = new JFrame("Galeria");
-		frame.setLayout(new GridLayout(GRID_WIDTH, GRID_HEIGHT));
-		frame.getContentPane().setBackground(new Color(0,0,0));
-		frame.setSize(
-			GRID_WIDTH * CELL_SIZE + FRAME_WIDTH,
-			GRID_HEIGHT * CELL_SIZE + FRAME_HEIGHT
-		);
+		frame.setLayout(new GridLayout(GRID_HEIGHT, GRID_WIDTH));
 
 		frame.addWindowListener(new WindowAdapter(){
-			public void windowClosing(WindowEvent we) {
-				System.exit(0);
-			}
-		});
+				public void windowClosing(WindowEvent we) {
+					System.exit(0);
+				}
+			});
+		
+		frame.getContentPane().setBackground(new Color(0,0,0));
 	}
 
 	public static void registerPreviewer(String ext, Class<? extends Component> p) {
@@ -64,30 +60,32 @@ public class Grid {
 
 	public void addElement(String element) {
 		elements.add(element);
-		if (elements.size() <= components.length) {
-			Matcher m = extensionPattern.matcher(element);
-			if (!m.find())
-				return;
-			try {
-				Component comp = previewers.get(m.group(1)).getConstructor().newInstance();
-				components[elements.size()-1] = comp;
-				comp.setPreferredSize(new Dimension(CELL_SIZE, CELL_SIZE));
-				frame.add(comp);
-				if (comp instanceof Previewer) {
-					Previewer p = (Previewer) comp;
-					p.setHandler(handler);
-					p.preview(element);
-					
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
+		Matcher m = extensionPattern.matcher(element);
+		if (!m.find())
+			return;
+		try {
+			Component comp = previewers.get(m.group(1)).getConstructor().newInstance();
+			components.add(comp);
+			comp.setPreferredSize(new Dimension(CELL_SIZE, CELL_SIZE));
+			if (comp instanceof Previewer) {
+				Previewer p = (Previewer) comp;
+				p.setHandler(handler);
+				p.preview(element);
 			}
+			frame.add(comp);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
-	
 	public void show() {
-		frame.setResizable(false);
+		/* rellena la cuadricula con jlabels vacios para que el gridlayout no se deforme */
+		if (components.size() < GRID_HEIGHT * GRID_WIDTH) {
+			for (int i = 0; i < GRID_HEIGHT * GRID_WIDTH - components.size(); i++) {
+				frame.add(new JLabel());
+			}
+		}
 		frame.pack();
 		frame.setVisible(true);
+		
 	}
 }

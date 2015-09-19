@@ -29,7 +29,6 @@ public class ImagePreviewer extends JPanel implements Previewer {
 	public void preview(String path) {
 		setOpaque(false);
 		try {
-			
 			Dimension d = this.getPreferredSize();
 			this.image = ImageIO.read(new File(path)).getScaledInstance(
 					d.width, d.height, Image.SCALE_SMOOTH
@@ -47,7 +46,6 @@ public class ImagePreviewer extends JPanel implements Previewer {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g; 
 		g2d.drawImage(image, 0, 0, null);
-		
 	}
 
 	@Override
