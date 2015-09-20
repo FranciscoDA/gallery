@@ -56,6 +56,7 @@ public class Visor {
 	}
 	
 	public void show() {
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 }

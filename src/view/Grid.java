@@ -78,6 +78,7 @@ public class Grid {
 			}
 		}
 		frame.pack();
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 }
