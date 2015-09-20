@@ -58,8 +58,4 @@ public class Visor {
 	public void show() {
 		frame.setVisible(true);
 	}
-	
-	public void dispose() {
-		frame.dispose();
-	}
 }
