@@ -15,17 +15,21 @@ import java.util.regex.Pattern;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import previewers.*;
+import view.previewers.*;
 
 public class Grid {
+	private static HashMap<String, Class<?>> previewers;
 	static {
 		previewers = new HashMap<>();
 		ServiceLoader<Previewer> previewLoader = ServiceLoader.load(Previewer.class);
-		for (@SuppressWarnings("unused") Object p : previewLoader) {
+		for (Previewer p : previewLoader) {
+			for (String ext : p.getExtensions()) {
+				previewers.put(ext, p.getClass());
+			}
 		}
 	}
 	private static Pattern extensionPattern = Pattern.compile("(\\..+)$");
-
+	
 	private static int GRID_WIDTH = 2;
 	private static int GRID_HEIGHT = 3;
 	private static int CELL_SIZE = 125;
@@ -35,9 +39,11 @@ public class Grid {
 	
 	private GridHandler handler;
 	private LinkedList<String> elements = new LinkedList<>();
-	private static HashMap<String, Class<? extends Component>> previewers;
+
 	
-	public Grid() {
+	public Grid(GridHandler h) {
+		handler = h;
+
 		frame = new JFrame("Galeria");
 		frame.setLayout(new GridLayout(GRID_HEIGHT, GRID_WIDTH));
 
@@ -50,29 +56,20 @@ public class Grid {
 		frame.getContentPane().setBackground(new Color(0,0,0));
 	}
 
-	public static void registerPreviewer(String ext, Class<? extends Component> p) {
-		previewers.put(ext, p);
-	}
-
-	public void setHandler(GridHandler h) {
-		handler = h;
-	}
-
 	public void addElement(String element) {
 		elements.add(element);
 		Matcher m = extensionPattern.matcher(element);
 		if (!m.find())
 			return;
 		try {
-			Component comp = previewers.get(m.group(1)).getConstructor().newInstance();
-			components.add(comp);
+			Component comp = (Component) previewers.get(m.group(1)).getConstructor().newInstance();
 			comp.setPreferredSize(new Dimension(CELL_SIZE, CELL_SIZE));
 			if (comp instanceof Previewer) {
 				Previewer p = (Previewer) comp;
-				p.setHandler(handler);
-				p.preview(element);
+				p.preview(element, handler, components.size());
 			}
 			frame.add(comp);
+			components.add(comp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -86,6 +83,5 @@ public class Grid {
 		}
 		frame.pack();
 		frame.setVisible(true);
-		
 	}
 }

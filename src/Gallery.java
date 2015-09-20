@@ -11,4 +11,7 @@ public class Gallery {
 	public ListIterator<String> getResources() {
 		return media.listIterator();
 	}
+	public ListIterator<String> getResources(int i) {
+		return media.listIterator(i);
+	}
 }
