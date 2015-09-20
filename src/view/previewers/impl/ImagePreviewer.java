@@ -20,7 +20,7 @@ public class ImagePreviewer extends JPanel implements Previewer {
 	public String[] getExtensions() {
 		return FileExtensions;
 	}
-	public class Listener extends java.awt.event.MouseAdapter {
+	public class Listener extends MouseAdapter {
 		private String path;
 		private GridHandler handler;
 		private int index;
@@ -65,7 +65,6 @@ public class ImagePreviewer extends JPanel implements Previewer {
 		g2d.drawImage(image, 0, 0, null);
 	}
 
-	@Override
 	public void addMouseListener(MouseAdapter a) {
 		super.addMouseListener(a);
 	}

@@ -5,26 +5,27 @@ import view.VisorHandler;
 
 
 public class MediaController {
-	private static class Handler implements VisorHandler {
-		Visor visor;
-		ListIterator<String> current;
-		public Handler(Visor v, ListIterator<String> pos) {
-			visor = v;
-			current = pos;
-		}
-		@Override
+	private static ListIterator<String> current;
+	private static Visor visor;
+	private static VisorHandler defaultHandler = new VisorHandler() {
 		public void itemNext() {
-			if (current.hasNext())
-				visor.view(current.next());
+			if(current.hasNext()) {
+				MediaController.view(current);
+			}
 		}
-		@Override
 		public void itemPrev() {
-			if (current.hasPrevious())
-				visor.view(current.previous());
+			for (int i=0; i < 2; i++)
+				if(current.hasPrevious())
+					current.previous();
+			MediaController.view(current);
 		}
-	}
+	};
+
 	public static void view(ListIterator<String> pos) {
-		Visor visor = null;
-		visor = new Visor(new Handler(visor, pos));
+		current = pos;
+		if (visor == null)
+			visor = new Visor(defaultHandler);
+		visor.setElement(pos.next());
+		visor.show();
 	}
 }

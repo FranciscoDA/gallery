@@ -28,7 +28,7 @@ public class Grid {
 			}
 		}
 	}
-	private static Pattern extensionPattern = Pattern.compile("(\\..+)$");
+	private static Pattern ExtensionPattern = Pattern.compile("(\\..+)$");
 	
 	private static int GRID_WIDTH = 2;
 	private static int GRID_HEIGHT = 3;
@@ -38,9 +38,6 @@ public class Grid {
 	private LinkedList<Component> components = new LinkedList<>();
 	
 	private GridHandler handler;
-	private LinkedList<String> elements = new LinkedList<>();
-
-	
 	public Grid(GridHandler h) {
 		handler = h;
 
@@ -57,8 +54,7 @@ public class Grid {
 	}
 
 	public void addElement(String element) {
-		elements.add(element);
-		Matcher m = extensionPattern.matcher(element);
+		Matcher m = ExtensionPattern.matcher(element);
 		if (!m.find())
 			return;
 		try {

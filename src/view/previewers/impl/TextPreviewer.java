@@ -16,7 +16,7 @@ public class TextPreviewer extends JTextArea implements Previewer {
 		return FileExtensions;
 	}
 
-	public class Listener extends java.awt.event.MouseAdapter {
+	public class Listener extends MouseAdapter {
 		private String path;
 		private GridHandler handler;
 		private int index;
@@ -57,10 +57,5 @@ public class TextPreviewer extends JTextArea implements Previewer {
 			e.printStackTrace();
 		}
 		super.addMouseListener(new Listener(path, h, index));
-	}
-
-	@Override
-	public void addMouseListener(MouseAdapter a) {
-		super.addMouseListener(a);
 	}
 }

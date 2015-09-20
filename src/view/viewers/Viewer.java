@@ -1,9 +1,8 @@
 package view.viewers;
-import java.awt.event.MouseAdapter;
-import view.GridHandler;
+
+import view.VisorHandler;
 
 public interface Viewer {
 	public String[] getExtensions();
-	public void preview(String path, GridHandler h, int index);
-	public void addMouseListener(MouseAdapter a);
+	public void view(String path, VisorHandler h);
 }
