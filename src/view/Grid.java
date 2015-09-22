@@ -28,7 +28,7 @@ public class Grid {
 			}
 		}
 	}
-	private static Pattern ExtensionPattern = Pattern.compile("(\\..+)$");
+	private static Pattern ExtensionPattern = Pattern.compile("(\\.[^.]+)$");
 	
 	private static int GRID_WIDTH = 2;
 	private static int GRID_HEIGHT = 3;
@@ -54,7 +54,7 @@ public class Grid {
 	}
 
 	public void addElement(String element) {
-		Matcher m = ExtensionPattern.matcher(element);
+		Matcher m = ExtensionPattern.matcher(element.toLowerCase());
 		if (!m.find())
 			return;
 		try {

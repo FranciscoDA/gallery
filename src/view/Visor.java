@@ -22,7 +22,7 @@ public class Visor {
 			}
 		}
 	}
-	private static Pattern ExtensionPattern = Pattern.compile("(\\..+)$");
+	private static Pattern ExtensionPattern = Pattern.compile("(\\.[^.]+)$");
 	
 	private static int DISPLAY_WIDTH = 800;
 	private static int DISPLAY_HEIGHT = 600;
@@ -36,7 +36,7 @@ public class Visor {
 		frame.setResizable(false);
 	}
 	public void setElement(String element) {
-		Matcher m = ExtensionPattern.matcher(element);
+		Matcher m = ExtensionPattern.matcher(element.toLowerCase());
 		if (!m.find())
 			return;
 		frame.setTitle(element);
