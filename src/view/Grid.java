@@ -11,10 +11,17 @@ import java.util.LinkedList;
 import java.util.ServiceLoader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.io.File;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetDropEvent;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
 
 import view.previewers.Previewer;
 
@@ -59,6 +66,23 @@ public class Grid {
 		});
 
 		frame.getContentPane().setBackground(new Color(0, 0, 0));
+
+		panel.setDropTarget(new DropTarget() {
+			public synchronized void drop(DropTargetDropEvent evt) {
+				Transferable tr = evt.getTransferable();
+				evt.acceptDrop(DnDConstants.ACTION_COPY);
+				try {
+					if (tr.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
+						List<File> files = (List<File>) tr.getTransferData(DataFlavor.javaFileListFlavor);
+						for (File file: files) {
+							handler.addItem(file.getPath());
+						}
+					}
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
 	}
 
 	public void addElement(String element) {
