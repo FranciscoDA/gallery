@@ -1,5 +1,8 @@
+package controller;
 import java.util.ListIterator;
 
+import instantiator.PersistentLoader;
+import model.Gallery;
 import view.Grid;
 import view.GridHandler;
 
