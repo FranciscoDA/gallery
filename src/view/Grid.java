@@ -61,6 +61,7 @@ public class Grid {
 		
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent we) {
+				handler.saveList();
 				System.exit(0);
 			}
 		});
