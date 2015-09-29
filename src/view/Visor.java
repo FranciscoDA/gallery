@@ -33,7 +33,7 @@ public class Visor {
 	public Visor(VisorHandler h) {
 		handler = h;
 		frame = new JFrame("Documento");
-		frame.setResizable(false);
+		//frame.setResizable(false);
 	}
 	public void setElement(String element) {
 		Matcher m = ExtensionPattern.matcher(element.toLowerCase());
@@ -48,6 +48,7 @@ public class Visor {
 				Viewer v = (Viewer) comp;
 				v.view(element, handler);
 			}
+			frame.getContentPane().setPreferredSize(comp.getPreferredSize());
 			frame.add(comp);
 			frame.pack();
 		} catch (Exception e) {

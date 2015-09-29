@@ -48,6 +48,7 @@ public class Grid {
 
 	private GridHandler handler;
 
+	@SuppressWarnings("serial")
 	public Grid(GridHandler h) {
 		handler = h;
 
