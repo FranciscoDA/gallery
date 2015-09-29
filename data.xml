@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<gallery>
-	<media path="lorem.txt" />
-	<media path="Smiley_Face.png" />
-	<media path="418497.jpg" />
-	<media path="data.xml" />
-	<media path="Smiley_Face.png" />
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><gallery>
+	<media path="lorem.txt"/>
+	<media path="Smiley_Face.png"/>
+	<media path="418497.jpg"/>
+	<media path="data.xml"/>
+	<media path="Smiley_Face.png"/>
 </gallery>

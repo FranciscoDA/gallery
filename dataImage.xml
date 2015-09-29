@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistent version="0.1">
+	<class name="model.Image">
+		<instance path="lorem.txt" />
+		<instance path="Smiley_Face.png" />
+		<instance path="418497.jpg" />
+		<instance path="data.xml" />
+		<instance path="Smiley_Face.png" />
+	</class>
+</persistent>
