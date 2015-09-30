@@ -12,10 +12,10 @@ import view.viewers.Viewer;
 
 @SuppressWarnings("serial")
 public class TextViewer extends JTextArea implements Viewer {
-	public static String[] FileExtensions = {".txt", ".xml"};
+	private static Class<?>[] MODEL_CLASSES = {model.Text.class};
 	@Override
-	public String[] getExtensions() {
-		return FileExtensions;
+	public Class<?>[] getSupportedClasses() {
+		return MODEL_CLASSES;
 	}
 
 	public class Listener extends MouseAdapter {

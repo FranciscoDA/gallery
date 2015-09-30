@@ -1,46 +1,32 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
 public class Gallery {
-	private LinkedList<String> media;
+	private LinkedList<GalleryElement> media;
 
-	private ArrayList<Image> images;
-
-	public Gallery(Collection<Image> c) {
+	public Gallery(Collection<GalleryElement> c) {
 		media = new LinkedList<>();
-		this.images = new ArrayList<>();
 		if (c != null) {
-			this.images.addAll(c);
-		}
-		/*SOLUCION TEMPORAL PARA NO MODIFICAR TODO*/
-		for (Iterator iterator = c.iterator(); iterator.hasNext();) {
-			Image image = (Image) iterator.next();
-			addResource(image.getPath());
+			this.media.addAll(c);
 		}
 	}
 
 	public Gallery() {
-		this(null);
+		media = new LinkedList<>();
 	}
 
-	public void addResource(String path) {
-		media.add(path);
+	public void addElement(GalleryElement i) {
+		media.add(i);
 	}
 
-	public ListIterator<String> getResources() {
+	public ListIterator<GalleryElement> getElements() {
 		return media.listIterator();
 	}
 
-	public ListIterator<String> getResources(int i) {
+	public ListIterator<GalleryElement> getElements(int i) {
 		return media.listIterator(i);
-	}
-	
-	public ListIterator<Image> getImages(){
-		return images.listIterator();
 	}
 }

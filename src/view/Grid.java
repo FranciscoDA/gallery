@@ -9,14 +9,15 @@ import java.awt.event.WindowEvent;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.ServiceLoader;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.io.File;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
+import model.GalleryElement;
+
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetDropEvent;
@@ -26,18 +27,17 @@ import java.awt.datatransfer.Transferable;
 import view.previewers.Previewer;
 
 public class Grid {
-	private static HashMap<String, Class<?>> previewers;
+	private static HashMap<Class<?>, Class<?>> previewers;
 
 	static {
 		previewers = new HashMap<>();
 		ServiceLoader<Previewer> previewLoader = ServiceLoader.load(Previewer.class);
 		for (Previewer p : previewLoader) {
-			for (String ext : p.getExtensions()) {
-				previewers.put(ext, p.getClass());
+			for (Class<?> c : p.getSupportedClasses()) {
+				previewers.put(c, p.getClass());
 			}
 		}
 	}
-	private static Pattern ExtensionPattern = Pattern.compile("(\\.[^.]+)$");
 	private static int GRID_WIDTH = 2;
 	private static int GRID_HEIGHT = 3;
 	private static int CELL_SIZE = 125;
@@ -87,16 +87,17 @@ public class Grid {
 		});
 	}
 
-	public void addElement(String element) {
-		Matcher m = ExtensionPattern.matcher(element.toLowerCase());
-		if (!m.find())
-			return;
+	public void addElement(GalleryElement image) {
+		String path = image.getPath();
 		try {
-			Component comp = (Component) previewers.get(m.group(1)).getConstructor().newInstance();
+			Component comp = (Component) previewers.get(image.getClass()).getConstructor().newInstance();
+			if (comp == null) {
+				
+			}
 			comp.setPreferredSize(new Dimension(CELL_SIZE, CELL_SIZE));
 			if (comp instanceof Previewer) {
 				Previewer p = (Previewer) comp;
-				p.preview(element, handler, components.size());
+				p.preview(path, handler, components.size());
 			}
 			panel.add(comp);
 			components.add(comp);

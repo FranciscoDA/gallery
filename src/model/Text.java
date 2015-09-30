@@ -1,9 +1,7 @@
 package model;
 
-public class Image implements GalleryElement {
+public class Text implements GalleryElement {
 	private String path;
-
-	@Override
 	public String getPath() {
 		return path;
 	}

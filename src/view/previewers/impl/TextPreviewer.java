@@ -11,9 +11,10 @@ import javax.swing.JTextArea;
 
 @SuppressWarnings("serial")
 public class TextPreviewer extends JTextArea implements Previewer {
-	private static String[] FileExtensions = {".txt", ".xml"}; 
-	public String[] getExtensions() {
-		return FileExtensions;
+	private static Class<?>[] MODEL_CLASSES = {model.Text.class};
+	@Override
+	public Class<?>[] getSupportedClasses() {
+		return MODEL_CLASSES;
 	}
 
 	public class Listener extends MouseAdapter {

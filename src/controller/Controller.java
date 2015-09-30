@@ -1,39 +1,34 @@
 package controller;
 
-import java.util.Collection;
-import java.util.Iterator;
-
-import ioc.Container;
-import ioc.ContainerXML;
-import ioc.IBean;
+import instantiator.ExtensionInstantiator;
+import instantiator.XMLContainer;
 import model.Gallery;
+import model.GalleryElement;
 import model.Image;
+import model.Text;
 
 public class Controller {
-	
 	public static void main(String[] args) {
-		Container container = new ContainerXML();
+		Gallery gallery = new Gallery();
+
+		ExtensionInstantiator instantiator = new ExtensionInstantiator();
+		// ARREGLAR PLS
+		instantiator.register(".jpg", Image.class);
+		instantiator.register(".png", Image.class);
+		instantiator.register(".bmp", Image.class);
+		instantiator.register(".txt", Text.class);
+		instantiator.register(".xml", Text.class);
 		
-		container.register(Image.class);
-		
-		container.loadFrom("dataImage.xml");
-		
-		@SuppressWarnings("unchecked")
-		IBean<Image> beanFactory = container.get(Image.class);
-		
-		Collection<Image> collect = beanFactory.listAll();
-		
-		Gallery gallery = new Gallery((Collection<Image>) collect);
-		
-		Iterator<Image> it = gallery.getImages();
-		
-		while (it.hasNext()){
-			Image i = it.next();
-			System.out.println(i.getPath());
+		XMLContainer container = new XMLContainer();
+		container.load();
+
+		for (Object o : container.get(model.GalleryElement.class)) {
+			if (o instanceof model.GalleryElement) {
+				gallery.addElement((GalleryElement)o);
+			}
 		}
 		
-		GalleryController gc = new GalleryController(gallery);
-		
+		new GalleryController(gallery, container);
 	}
 
 }
