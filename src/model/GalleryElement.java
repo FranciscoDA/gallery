@@ -1,5 +1,8 @@
 package model;
 
-public interface GalleryElement {
-	public String getPath();
+public class GalleryElement {
+	private String path;
+	public String getPath() {
+		return path;
+	}
 }
