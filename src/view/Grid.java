@@ -56,9 +56,7 @@ public class Grid {
 		handler = h;
 
 		frame = new JFrame("Galeria");
-		/* No permite scroll */
-		//frame.setLayout(new GridLayout(GRID_HEIGHT, GRID_WIDTH));
-		/* De esta manera, se permite una galeria a pantalla completa */
+
 		panel = new JPanel(new WrapLayout(FlowLayout.LEFT));
 
 	    frame.add(new JScrollPane(panel));
@@ -91,8 +89,7 @@ public class Grid {
 	}
 
 	public void addElement(GalleryElement image) {
-		String path = image.getPath();
-		Matcher m = ExtensionPattern.matcher(path);
+		Matcher m = ExtensionPattern.matcher(image.getPath());
 		if(!m.find())
 			return;
 
@@ -104,7 +101,7 @@ public class Grid {
 			comp.setPreferredSize(new Dimension(CELL_SIZE, CELL_SIZE));
 			if (comp instanceof Previewer) {
 				Previewer p = (Previewer) comp;
-				p.preview(path, handler, components.size());
+				p.preview(image.getPath(), handler, components.size());
 			}
 			panel.add(comp);
 			components.add(comp);

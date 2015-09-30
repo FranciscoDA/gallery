@@ -32,8 +32,7 @@ public class ExtensionInstantiator implements Instantiator {
 				} catch (InstantiationException | IllegalAccessException
 						| IllegalArgumentException | InvocationTargetException
 						| NoSuchMethodException | SecurityException e) {
-					// TODO Auto-generated catch block
-					//e.printStackTrace();
+					System.out.println("Ocurrio un error al crear la instancia\n\t"+e.getMessage());
 				}
 			}
 		}

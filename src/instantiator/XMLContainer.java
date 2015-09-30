@@ -104,7 +104,7 @@ public class XMLContainer implements PersistenceLayer {
 	}
 
 	@Override
-	public <T> Iterable<T> get(Class<T> type) {
+	public <T> Iterable<T> getAll(Class<T> type) {
 		return new ClassBasedIterable<T>(type, instances);
 	}
 

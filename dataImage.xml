@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <persistent version="0.1">
-  <instance class="model.Text" path="lorem.txt"/>
+  <instance class="model.Image" path="lorem.txt"/>
   <instance class="model.Image" path="Smiley_Face.png"/>
   <instance class="model.Image" path="418497.jpg"/>
   <instance class="model.Image" path="Smiley_Face.png"/>
-  <instance class="model.Text" path="dataImage.xml"/>
+  <instance class="model.Image" path="dataImage.xml"/>
 </persistent>
