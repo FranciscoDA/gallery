@@ -95,9 +95,6 @@ public class Grid {
 
 		try {
 			Component comp = (Component) previewers.get(m.group(1)).getConstructor().newInstance();
-			if (comp == null) {
-				
-			}
 			comp.setPreferredSize(new Dimension(CELL_SIZE, CELL_SIZE));
 			if (comp instanceof Previewer) {
 				Previewer p = (Previewer) comp;

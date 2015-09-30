@@ -1,5 +1,6 @@
 package controller;
 
+import instantiator.ExtensionInstantiator;
 import instantiator.XMLContainer;
 import model.Gallery;
 import model.GalleryElement;
@@ -8,6 +9,7 @@ public class Controller {
 	public static void main(String[] args) {
 		Gallery gallery = new Gallery();
 
+		ExtensionInstantiator instantiator = new ExtensionInstantiator();
 		XMLContainer container = new XMLContainer();
 		container.load();
 
@@ -17,7 +19,7 @@ public class Controller {
 			}
 		}
 		
-		new GalleryController(gallery, container);
+		new GalleryController(gallery, container, instantiator);
 	}
 
 }

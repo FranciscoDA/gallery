@@ -1,6 +1,7 @@
 package instantiator;
 
-import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,10 +29,20 @@ public class ExtensionInstantiator implements Instantiator {
 			Class<?> type = byExtension.get(ext);
 			if (type != null) {
 				try {
-					return type.getConstructor().newInstance();
-				} catch (InstantiationException | IllegalAccessException
-						| IllegalArgumentException | InvocationTargetException
-						| NoSuchMethodException | SecurityException e) {
+					Constructor<?> ctor = type.getConstructor();
+					boolean ctorAccessible = ctor.isAccessible();
+					ctor.setAccessible(true);
+					Object o = ctor.newInstance();
+					ctor.setAccessible(ctorAccessible);
+					for (String key : keyval.keySet()) {
+						Field f = type.getDeclaredField(key);
+						boolean fieldAccessible = f.isAccessible();
+						f.setAccessible(true);
+						type.getField(key).set(o, keyval.get(key));
+						f.setAccessible(fieldAccessible);
+					}
+					return o;
+				} catch (Exception e) {
 					System.out.println("Ocurrio un error al crear la instancia\n\t"+e.getMessage());
 				}
 			}
@@ -39,4 +50,24 @@ public class ExtensionInstantiator implements Instantiator {
 		return null;
 	}
 
+	@Override
+	public <T> T instantiate(Class<T> type, HashMap<String, Object> keyval) {
+		try {
+			Constructor<T> ctor = type.getConstructor();
+			boolean ctorAccessible = ctor.isAccessible();
+			ctor.setAccessible(true);
+			T o = ctor.newInstance();
+			ctor.setAccessible(ctorAccessible);
+			for (Field f : type.getDeclaredFields()) {
+				boolean fieldAccessible = f.isAccessible();
+				f.setAccessible(true);
+				f.set(o, keyval.get(f.getName()));
+				f.setAccessible(fieldAccessible);
+			}
+			return o;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
