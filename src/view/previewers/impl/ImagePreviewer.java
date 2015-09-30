@@ -2,6 +2,7 @@ package view.previewers.impl;
 
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -46,10 +47,27 @@ public class ImagePreviewer extends JLabel implements Previewer {
 		setOpaque(false);
 		try {
 			Dimension d = this.getPreferredSize();
-			Image image = ImageIO.read(new File(path)).getScaledInstance(
-					d.width, d.height, Image.SCALE_SMOOTH
+			BufferedImage src = ImageIO.read(new File(path));
+			BufferedImage canvas = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_ARGB);
+			float srcratio = ((float)src.getWidth()) / ((float)src.getHeight());
+			float outratio = d.width / d.height;
+			int width = d.width;
+			int height = d.height;
+			int xoffset = 0;
+			int yoffset = 0;
+
+			if (outratio < srcratio) {
+				height = (int)(((float) d.width) / srcratio);
+				yoffset = (int)((d.height - height)/2);
+			} else if (outratio > srcratio) {
+				width = (int)(((float) d.height) * srcratio);
+				xoffset = (int)((d.width - width)/2);
+			}
+			Image image = src.getScaledInstance(
+					width, height, Image.SCALE_SMOOTH
 			);
-			this.setIcon(new ImageIcon(image));
+			canvas.getGraphics().drawImage(image, xoffset, yoffset, null);
+			this.setIcon(new ImageIcon(canvas));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
