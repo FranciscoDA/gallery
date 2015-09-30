@@ -15,10 +15,10 @@ import view.previewers.Previewer;
 
 @SuppressWarnings("serial")
 public class ImagePreviewer extends JLabel implements Previewer {
-	private static Class<?> MODEL_CLASSES[] = {model.Image.class};
+	private static String FILE_EXTENSIONS[] = {".jpg", ".png", ".bmp"};
 	@Override
-	public Class<?>[] getSupportedClasses() {
-		return MODEL_CLASSES;
+	public String[] getSupportedExtensions() {
+		return FILE_EXTENSIONS;
 	}
 	public class Listener extends MouseAdapter {
 		private String path;

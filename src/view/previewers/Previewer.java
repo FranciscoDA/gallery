@@ -3,6 +3,6 @@ package view.previewers;
 import view.GridHandler;
 
 public interface Previewer {
-	public Class<?>[] getSupportedClasses();
+	public String[] getSupportedExtensions();
 	public void preview(String path, GridHandler h, int index);
 }

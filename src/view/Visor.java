@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.ServiceLoader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
 
@@ -12,13 +14,14 @@ import model.GalleryElement;
 import view.viewers.Viewer;
 
 public class Visor {
-	private static HashMap<Class<?>, Class<?>> viewers;
+	private static Pattern ExtensionPattern = Pattern.compile("(\\.[^.]+)$");
+	private static HashMap<String, Class<?>> viewers;
 	static {
 		viewers = new HashMap<>();
 		ServiceLoader<Viewer> viewLoader = ServiceLoader.load(Viewer.class);
 		for (Viewer v : viewLoader) {
-			for (Class<?> c : v.getSupportedClasses()) {
-				viewers.put(c, v.getClass());
+			for (String ext : v.getSupportedExtensions()) {
+				viewers.put(ext, v.getClass());
 			}
 		}
 	}
@@ -36,10 +39,13 @@ public class Visor {
 	}
 	public void setElement(GalleryElement element) {
 		String path = element.getPath();
+		Matcher m = ExtensionPattern.matcher(path);
+		if (!m.find())
+			return;
 		frame.setTitle(path);
 		frame.getContentPane().removeAll();
 		try {
-			Component comp = (Component) viewers.get(element.getClass()).getConstructor().newInstance();
+			Component comp = (Component) viewers.get(m.group(1)).getConstructor().newInstance();
 			comp.setPreferredSize(new Dimension(DISPLAY_WIDTH, DISPLAY_HEIGHT));
 			if (comp instanceof Viewer) {
 				Viewer v = (Viewer) comp;

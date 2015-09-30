@@ -16,10 +16,10 @@ import view.viewers.Viewer;
 
 @SuppressWarnings("serial")
 public class ImageViewer extends JPanel implements Viewer {
-	private static Class<?> MODEL_CLASSES[] = {model.Image.class};
+	private static String[] FILE_EXTENSIONS = {".jpg", ".png", ".bmp"};
 	@Override
-	public Class<?>[] getSupportedClasses() {
-		return MODEL_CLASSES;
+	public String[] getSupportedExtensions() {
+		return FILE_EXTENSIONS;
 	}
 	
 	public class Listener extends MouseAdapter {

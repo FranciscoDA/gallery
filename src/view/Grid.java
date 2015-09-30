@@ -11,6 +11,8 @@ import java.util.LinkedList;
 import java.util.ServiceLoader;
 import java.io.File;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -27,14 +29,15 @@ import java.awt.datatransfer.Transferable;
 import view.previewers.Previewer;
 
 public class Grid {
-	private static HashMap<Class<?>, Class<?>> previewers;
+	private static Pattern ExtensionPattern = Pattern.compile("(\\.[^.]+)$");
 
+	private static HashMap<String, Class<?>> previewers;
 	static {
 		previewers = new HashMap<>();
 		ServiceLoader<Previewer> previewLoader = ServiceLoader.load(Previewer.class);
 		for (Previewer p : previewLoader) {
-			for (Class<?> c : p.getSupportedClasses()) {
-				previewers.put(c, p.getClass());
+			for (String ext : p.getSupportedExtensions()) {
+				previewers.put(ext, p.getClass());
 			}
 		}
 	}
@@ -89,8 +92,12 @@ public class Grid {
 
 	public void addElement(GalleryElement image) {
 		String path = image.getPath();
+		Matcher m = ExtensionPattern.matcher(path);
+		if(!m.find())
+			return;
+
 		try {
-			Component comp = (Component) previewers.get(image.getClass()).getConstructor().newInstance();
+			Component comp = (Component) previewers.get(m.group(1)).getConstructor().newInstance();
 			if (comp == null) {
 				
 			}

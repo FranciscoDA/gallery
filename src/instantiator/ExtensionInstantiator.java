@@ -23,7 +23,7 @@ public class ExtensionInstantiator implements Instantiator {
 		Object path = keyval.get("path");
 		if (path instanceof String) {
 			Matcher m = ExtensionPattern.matcher((String) path);
-			m.matches();
+			m.find();
 			String ext = m.group(1);
 			Class<?> type = byExtension.get(ext);
 			if (type != null) {
