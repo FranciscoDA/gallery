@@ -23,14 +23,15 @@ public class GalleryController implements GridHandler {
 		this.grid = new Grid(this);
 		ListIterator<GalleryElement> i = gallery.getElements();
 		while(i.hasNext()) {
-			grid.addElement(i.next());
+			grid.addElement(i.next().getPath());
 		}
 		grid.show();
 	}
 
 	@Override
-	public void saveList() {
+	public void closeWindow() {
 		persistor.save();
+		System.exit(0);
 	}
 
 	@Override
@@ -44,7 +45,7 @@ public class GalleryController implements GridHandler {
 		hm.put("path", path);
 		GalleryElement ge = instantiator.instantiate(GalleryElement.class, hm);
 		gallery.addElement(ge);
-		grid.addElement(ge);
+		grid.addElement(ge.getPath());
 		persistor.add(ge);
 		grid.show();
 	}

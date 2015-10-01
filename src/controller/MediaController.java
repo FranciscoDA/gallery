@@ -15,15 +15,14 @@ public class MediaController implements VisorHandler {
 		current = pos;
 		if (visor == null)
 			visor = new Visor(this);
-		visor.setElement(pos.next());
+		visor.setElement(pos.next().getPath());
 		visor.show();
 	}
 
 	@Override
 	public void itemNext() {
 		if(current.hasNext()) {
-			visor.setElement(current.next());
-			//MediaController.view(current);
+			visor.setElement(current.next().getPath());
 		}
 	}
 
@@ -32,6 +31,6 @@ public class MediaController implements VisorHandler {
 		for (int i=0; i < 2; i++)
 			if(current.hasPrevious())
 				current.previous();
-		visor.setElement(current.next());
+		visor.setElement(current.next().getPath());
 	}
 }

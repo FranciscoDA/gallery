@@ -4,5 +4,5 @@
   <instance class="model.GalleryElement" path="Smiley_Face.png"/>
   <instance class="model.GalleryElement" path="418497.jpg"/>
   <instance class="model.GalleryElement" path="Smiley_Face.png"/>
-  <instance class="model.GalleryElement" path="dataImage.xml"/>
+  <instance class="model.GalleryElement" path="data.xml"/>
 </persistent>

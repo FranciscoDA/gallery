@@ -6,11 +6,7 @@ import java.util.HashMap;
 import java.util.ServiceLoader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.swing.JFrame;
-
-import model.GalleryElement;
-
 import view.viewers.Viewer;
 
 public class Visor {
@@ -37,8 +33,8 @@ public class Visor {
 		frame = new JFrame("Documento");
 		frame.setResizable(false);
 	}
-	public void setElement(GalleryElement element) {
-		String path = element.getPath();
+
+	public void setElement(String path) {
 		Matcher m = ExtensionPattern.matcher(path);
 		if (!m.find())
 			return;

@@ -18,8 +18,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import model.GalleryElement;
-
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetDropEvent;
@@ -54,17 +52,22 @@ public class Grid {
 	@SuppressWarnings("serial")
 	public Grid(GridHandler h) {
 		handler = h;
+		Dimension frameSize = new Dimension((GRID_WIDTH) * CELL_SIZE+10, (GRID_HEIGHT) * CELL_SIZE);
 
 		frame = new JFrame("Galeria");
+		//frame.setSize(frameSize);
 
 		panel = new JPanel(new WrapLayout(FlowLayout.LEFT));
+		panel.setSize(frameSize);
+		panel.setMaximumSize(frameSize);
+		panel.setMinimumSize(frameSize);
+		panel.setPreferredSize(frameSize);
 
 	    frame.add(new JScrollPane(panel));
 		
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent we) {
-				handler.saveList();
-				System.exit(0);
+				handler.closeWindow();
 			}
 		});
 
@@ -88,8 +91,8 @@ public class Grid {
 		});
 	}
 
-	public void addElement(GalleryElement image) {
-		Matcher m = ExtensionPattern.matcher(image.getPath());
+	public void addElement(String path) {
+		Matcher m = ExtensionPattern.matcher(path);
 		if(!m.find())
 			return;
 
@@ -98,20 +101,19 @@ public class Grid {
 			comp.setPreferredSize(new Dimension(CELL_SIZE, CELL_SIZE));
 			if (comp instanceof Previewer) {
 				Previewer p = (Previewer) comp;
-				p.preview(image.getPath(), handler, components.size());
+				p.preview(path, handler, components.size());
 			}
 			panel.add(comp);
 			components.add(comp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		frame.pack();
 	}
 
 	public void show() {
-		frame.setSize((GRID_WIDTH + 1) * CELL_SIZE, (GRID_HEIGHT + 1) * CELL_SIZE);
 		/* Luego se puede jugar un poco con los maximos y minimos del frame */
 		frame.pack();
-		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 }

@@ -26,7 +26,7 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class XMLContainer implements PersistenceLayer {
-	private static String FILE_PATH = "dataImage.xml"; 
+	private static String FILE_PATH = "data.xml"; 
 
 	/**
 	 * Iterador que devuelve instancias de T
