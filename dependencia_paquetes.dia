@@ -463,7 +463,7 @@
         <dia:point val="7.3001,5.85"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="7.2501,5.4;12.5495,7.45"/>
+        <dia:rectangle val="7.2501,5.1;12.5495,6.7"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -500,50 +500,6 @@
       <dia:connections>
         <dia:connection handle="0" to="O0" connection="4"/>
         <dia:connection handle="1" to="O3" connection="8"/>
-      </dia:connections>
-    </dia:object>
-    <dia:object type="UML - Dependency" version="1" id="O11">
-      <dia:attribute name="obj_pos">
-        <dia:point val="7.9501,16.4"/>
-      </dia:attribute>
-      <dia:attribute name="obj_bb">
-        <dia:rectangle val="7.9001,15.9;12.3997,17.975"/>
-      </dia:attribute>
-      <dia:attribute name="meta">
-        <dia:composite type="dict"/>
-      </dia:attribute>
-      <dia:attribute name="orth_points">
-        <dia:point val="7.9501,16.4"/>
-        <dia:point val="9.74988,16.4"/>
-        <dia:point val="9.74988,16.35"/>
-        <dia:point val="11.9497,16.35"/>
-      </dia:attribute>
-      <dia:attribute name="orth_orient">
-        <dia:enum val="0"/>
-        <dia:enum val="1"/>
-        <dia:enum val="0"/>
-      </dia:attribute>
-      <dia:attribute name="orth_autoroute">
-        <dia:boolean val="true"/>
-      </dia:attribute>
-      <dia:attribute name="text_colour">
-        <dia:color val="#000000"/>
-      </dia:attribute>
-      <dia:attribute name="line_colour">
-        <dia:color val="#000000"/>
-      </dia:attribute>
-      <dia:attribute name="name">
-        <dia:string>##</dia:string>
-      </dia:attribute>
-      <dia:attribute name="stereotype">
-        <dia:string>##</dia:string>
-      </dia:attribute>
-      <dia:attribute name="draw_arrow">
-        <dia:boolean val="true"/>
-      </dia:attribute>
-      <dia:connections>
-        <dia:connection handle="0" to="O1" connection="4"/>
-        <dia:connection handle="1" to="O2" connection="8"/>
       </dia:connections>
     </dia:object>
   </dia:layer>
